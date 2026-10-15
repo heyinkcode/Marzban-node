@@ -1,6 +1,6 @@
-# Managed outbound UDP contract
+# Managed outbound DNS and UDP contract
 
-Change: `MR-20261003-EGRESS-UDP` (2026-10-03), Mr.shaw. Paired code and latest images are published, with Actions/digests/OCI revisions verified in [release evidence](egress-udp-release.md). Server/provider/mobile/UI screenshot acceptance remains pending; not a stable-release claim. Pair with the panel change of the same ID. Scripts runtime is unchanged; pinned Xray remains `v26.3.27`.
+Per-Node HTTP/SOCKS5 egress modes use an isolated configuration copy. They do not change the main-server business egress or another Node. Pinned Xray remains v26.3.27. See [diagnostics and acknowledged apply](egress-probe.md) for the current panel lifecycle.
 
 ## Wire format
 
@@ -37,14 +37,14 @@ The extension is validated and applied on a deep copy, committed only on success
 
 ## Compatibility and rollback
 
-Panel GET/PUT egress expose `udp_mode`, default legacy. Nonlegacy requires both capability flags and is checked before saving and again on connect/restart. Missing capability/old/offline Node returns panel 409; invalid input 422. Legacy remains compatible with old managed-outbound Nodes. A downgraded Node cannot silently ignore saved nonlegacy settings.
+Panel GET/PUT egress expose `udp_mode`, default legacy. Nonlegacy requires both capability flags and is checked before saving and again on connect/restart. Missing capability/old/offline Node returns panel 409; invalid input 422. The legacy wire field remains parse-compatible with old managed-outbound Nodes; the current panel save/delete workflow additionally requires `managed-egress-probe-v1`, acknowledged apply and API readiness. See [diagnostics and safe apply](egress-probe.md). A downgraded Node cannot silently ignore saved nonlegacy settings.
 
-Paired images are now published with verified source revisions: update Node first, check connection, then update panel and enable a mode on a test Node. Back up Compose, certificates/config and data directories. Existing switched Fork installations use update without repeated adopt. Keep existing service/API ports, volumes and credentials; do not reinstall or delete volumes. Restore legacy before downgrading either side. Panel migration only adds `node_egress.udp_mode`; Node has no migration.
+Update a target Node with the required outbound and safe-apply capabilities first, check connection, then update the panel and enable a mode on a test Node. Back up Compose, certificates/config and data directories. Existing switched Fork installations use update without repeated adopt. Keep existing service/API ports, volumes and credentials; do not reinstall or delete volumes. Restore legacy before downgrading either side. Panel migration only adds `node_egress.udp_mode`; Node has no migration.
 
-## Evidence and acceptance
+## Verification and attribution
 
-Local: 48 Node unittest tests passed without skips using the pinned binary, including 8 authenticated/unauthenticated HTTP/SOCKS parser combinations and 4 real A/TXT DNS TCP runtime tests against localhost fake providers. No supplier secrets/external DNS network are used in these tests. Route priority, non-DNS UDP blackhole rules, invalid policy atomicity and old behavior are covered. Non-DNS blackhole coverage is unit-level, not a real-app acceptance claim.
+Use an isolated test account to verify the provider exit IP, TCP53, selected UDP mode and real client behavior. Do not change a busy production Node to isolate one phone. Parser or local DNS success does not prove all applications or a provider's full UDP support.
 
-Pending: Linux authenticated panel/Node integration, real supplier TCP53 support, actual v2rayNG vs Clash Meta DNS/routes, non-DNS UDP/apps, residential egress IP, legacy rollback and a UDP-capable supplier regression. Never change a busy production Node merely to isolate one phone's traffic.
+Retain Gozargah/Marzban-Node and XTLS/Xray-core licenses and credits. Reference behavior: [fixed-version DNS outbound](https://github.com/XTLS/Xray-core/blob/v26.3.27/proxy/dns/dns.go) and [DNS config parser](https://github.com/XTLS/Xray-core/blob/v26.3.27/infra/conf/dns_proxy.go).
 
-Attribution: retain Gozargah/Marzban-Node and XTLS/Xray-core licenses and credits. Reference only, not copied code: [Xray DNS outbound v26.3.27](https://github.com/XTLS/Xray-core/blob/v26.3.27/proxy/dns/dns.go) and [DNS config parser](https://github.com/XTLS/Xray-core/blob/v26.3.27/infra/conf/dns_proxy.go). Panel contract: `Marzban/docs/NODE_EGRESS_UDP.md` in the paired repository.
+[Panel configuration guide](https://github.com/kissow/Marzban/blob/master/docs/NODE_EGRESS_UDP.md) · [Historical tests and release evidence](releases/egress-udp-guide-20261015.md)

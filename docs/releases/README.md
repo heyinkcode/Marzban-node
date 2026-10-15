@@ -14,3 +14,12 @@
 | 普通订阅与 HWID 兼容 | [说明](../activity-and-policy.md) | [发布历史](subscription-compatibility.md) |
 
 历史首页快照单独保留在[旧首页归档](../README_RELEASE_HISTORY.md)，不再追加新记录。新更新在对应功能专页维护，CHANGELOG只保留一句摘要和链接。
+
+## 旧功能说明快照
+
+以下原文完整保留拆分前的使用、测试和发布内容；当前行为以每份快照顶部的当前说明为准。
+
+- [Node 活动统计与设备策略合同](activity-and-policy-guide-20261015.md)
+- [Node 出口连接检测与安全应用](egress-probe-guide-20261015.md)
+- [Managed outbound UDP contract](egress-udp-guide-20261015.md)
+- [Mr.shaw Node → Node 线协议](node-relay-guide-20261015.md)

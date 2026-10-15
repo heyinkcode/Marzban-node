@@ -26,3 +26,5 @@ Node 只加载主控最终下发的账号配置；无 HWID 共享兼容账号仍
 主控、Node、scripts 分别登记是否有运行时变化，按能力要求配对发布。普通单测、Linux 构建、双架构镜像核对和真实服务器验收是不同阶段。已有 Fork 使用 update，新机才 install，不重复 adopt 或删除数据卷。
 
 [主控 API 索引](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md) · [跨仓库流程](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md) · [本仓库发布检查](../RELEASE_CHECKLIST.md)
+
+模式字段解析兼容与当前主控安全应用能力是两项检查；旧 Node 可继续已有业务，不表示支持新的检测/保存/删除流程。见[出口检测合同](egress-probe.md)。文档整理不改变 REST/RPyC、认证或运行时。
