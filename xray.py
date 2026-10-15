@@ -3,6 +3,7 @@ import json
 import re
 import subprocess
 import threading
+import time
 from collections import deque
 from contextlib import contextmanager
 
@@ -118,7 +119,10 @@ class XRayCore:
 
         self.version = self.get_version()
         self.process = None
+        self._last_config = None
+        self._logs_thread = None
         self.restarting = False
+        self._restart_lock = threading.Lock()
 
         self._logs_buffer = deque(maxlen=100)
         self._temp_log_buffers = {}
@@ -128,7 +132,7 @@ class XRayCore:
             "XRAY_LOCATION_ASSET": assets_path
         }
 
-        atexit.register(lambda: self.stop() if self.started else None)
+        atexit.register(self.stop)
 
     def get_version(self):
         cmd = [self.executable_path, "version"]
@@ -153,9 +157,11 @@ class XRayCore:
             raise RuntimeError("Xray configuration preflight failed; current core was not changed")
 
     def __capture_process_logs(self):
+        # A reader belongs to one process generation, never a replacement.
+        process = self.process
         def capture_and_debug_log():
-            while self.process:
-                output = self.process.stdout.readline()
+            while process:
+                output = process.stdout.readline()
                 if output:
                     output = output.strip()
                     self._logs_buffer.append(output)
@@ -163,25 +169,23 @@ class XRayCore:
                         buf.append(output)
                     logger.debug(output)
 
-                elif not self.process or self.process.poll() is not None:
+                elif process.poll() is not None:
                     break
 
         def capture_only():
-            while self.process:
-                output = self.process.stdout.readline()
+            while process:
+                output = process.stdout.readline()
                 if output:
                     output = output.strip()
                     self._logs_buffer.append(output)
                     for buf in list(self._temp_log_buffers.values()):
                         buf.append(output)
 
-                elif not self.process or self.process.poll() is not None:
+                elif process.poll() is not None:
                     break
 
-        if DEBUG:
-            threading.Thread(target=capture_and_debug_log).start()
-        else:
-            threading.Thread(target=capture_only).start()
+        self._logs_thread = threading.Thread(target=capture_and_debug_log if DEBUG else capture_only, daemon=True)
+        self._logs_thread.start()
 
     @contextmanager
     def get_logs(self):
@@ -233,6 +237,7 @@ class XRayCore:
         self.process.stdin.write(config.to_json())
         self.process.stdin.flush()
         self.process.stdin.close()
+        self._last_config = config
 
         self.__capture_process_logs()
 
@@ -241,11 +246,28 @@ class XRayCore:
             threading.Thread(target=func).start()
 
     def stop(self):
-        if not self.started:
+        process = self.process
+        if process is None:
             return
-
-        self.process.terminate()
+        running = process.poll() is None
+        if running:
+            process.terminate()
+            try:
+                process.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait(timeout=3)
+        else:
+            process.wait(timeout=3)
         self.process = None
+        reader = getattr(self, "_logs_thread", None)
+        if reader is not None and reader is not threading.current_thread():
+            reader.join(timeout=2)
+        for stream in (process.stdin, process.stdout, process.stderr):
+            if stream is not None:
+                stream.close()
+        if not running:
+            return
         logger.warning("Xray core stopped")
 
         # execute on stop functions
@@ -254,16 +276,40 @@ class XRayCore:
 
     def restart(self, config: XRayConfig):
         if self.restarting is True:
-            return
+            raise RuntimeError("XRAY_RESTART_BUSY")
+
+        lock = getattr(self, "_restart_lock", None)
+        if lock is None:
+            lock = self._restart_lock = threading.Lock()
+        if not lock.acquire(blocking=False):
+            raise RuntimeError("XRAY_RESTART_BUSY")
 
         self.restarting = True
+        previous = getattr(self, "_last_config", None)
         try:
             self.validate_config(config)
             logger.warning("Restarting Xray core...")
             self.stop()
-            self.start(config, prevalidated=True)
+            try:
+                self.start(config, prevalidated=True)
+                time.sleep(0.3)
+                if not self.started:
+                    raise RuntimeError("Replacement core exited")
+            except Exception as exc:
+                if previous is not None:
+                    try:
+                        self.stop()
+                        self.start(previous, prevalidated=True)
+                        time.sleep(0.3)
+                        if not self.started:
+                            raise RuntimeError("Previous core exited")
+                    except Exception:
+                        raise RuntimeError("XRAY_RESTART_FAILED_ROLLBACK_FAILED") from None
+                    raise RuntimeError("XRAY_RESTART_FAILED_ROLLED_BACK") from None
+                raise RuntimeError("XRAY_RESTART_FAILED_NO_PREVIOUS_CONFIG") from None
         finally:
             self.restarting = False
+            lock.release()
 
     def on_start(self, func: callable):
         self._on_start_funcs.append(func)

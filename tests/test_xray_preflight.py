@@ -63,6 +63,30 @@ class XRayPreflightTests(unittest.TestCase):
         self.core.start.assert_not_called()
         self.assertFalse(self.core.restarting)
 
+    def test_failed_start_restores_last_running_configuration(self):
+        previous=Mock(); self.core._last_config=previous
+        self.core.validate_config=Mock(); self.core.stop=Mock()
+        self.core.process=Mock(); self.core.process.poll.return_value=0
+        def start(config,prevalidated):
+            self.core.process.poll.return_value=0 if config is self.config else None
+        self.core.start=Mock(side_effect=start)
+        with patch.object(module.time,"sleep"),self.assertRaisesRegex(RuntimeError,"FAILED_ROLLED_BACK"):
+            self.core.restart(self.config)
+        self.assertEqual(self.core.start.call_args_list[-1].args,(previous,))
+        self.assertFalse(self.core.restarting)
+
+    def test_failed_rollback_is_not_reported_as_restored(self):
+        self.core._last_config=Mock(); self.core.validate_config=Mock(); self.core.stop=Mock()
+        self.core.start=Mock(side_effect=RuntimeError("secret-password"))
+        with self.assertRaisesRegex(RuntimeError,"ROLLBACK_FAILED") as error:
+            self.core.restart(self.config)
+        self.assertNotIn("secret-password",str(error.exception)); self.assertFalse(self.core.restarting)
+
+    def test_parallel_restart_is_not_acknowledged_as_success(self):
+        self.core.restarting=True
+        with self.assertRaisesRegex(RuntimeError,"RESTART_BUSY"):
+            self.core.restart(self.config)
+
 
 if __name__ == "__main__":
     unittest.main()

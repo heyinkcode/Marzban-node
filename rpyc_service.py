@@ -9,6 +9,7 @@ from config import XRAY_ASSETS_PATH, XRAY_EXECUTABLE_PATH
 from device_activity import DeviceActivityTracker
 from device_policy import DevicePolicyStore
 from health import snapshot
+from egress_probe import probe as probe_egress
 from relay_manager import RelayManager
 from logger import logger
 from xray import XRayConfig, XRayCore
@@ -172,6 +173,13 @@ class XrayService(rpyc.Service):
     @rpyc.exposed
     def fetch_relay_status(self):
         return json.dumps({**self.relays.status(), "core_started": bool(self.core and self.core.started)})
+
+    @rpyc.exposed
+    def probe_egress(self, payload):
+        if not isinstance(payload, str) or len(payload) > 16384:
+            raise ValueError("Invalid egress probe parameters")
+        request = json.loads(payload)
+        return json.dumps(probe_egress(request["profile"], request.get("timeout", 5), request.get("attempts", 1)))
 
     @rpyc.exposed
     def set_relays(self, profiles):

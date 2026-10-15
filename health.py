@@ -109,6 +109,7 @@ def snapshot():
             "source": "node-runtime",
             "capabilities": [
                 "managed-outbounds-v1",
+                "managed-egress-probe-v1",
                 "managed-outbounds-udp-v1",
                 "managed-node-relay-v1",
                 "device-policy-v1",
