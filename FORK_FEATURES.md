@@ -13,3 +13,5 @@
 Xray 固定 v26.3.27。扩展沿用原认证 REST/RPyC 与端口；新能力要按合同核对配对版本。透明中转当前为单跳 VLESS TCP/RAW REALITY 范围，不是任意协议或独立 UDP 中转。策略确认、监听成功或容器运行都不代表业务整链已验收。
 
 [协议与开发边界](docs/node-development-plan.md) · [更新摘要](CHANGELOG.md) · [功能发布历史](docs/releases/README.md) · [发布检查](RELEASE_CHECKLIST.md)
+
+使用与协议说明见[文档中心](docs/README.md)，旧阶段测试和发布证据见[对应历史索引](docs/releases/README.md)；文档整理不改变运行时。

@@ -1,5 +1,7 @@
 # MR-20261003-EGRESS-UDP paired release evidence
 
+> 发布快照：以下提交、镜像摘要、验收状态及预期 revision 对应文中的发布日期，不代表之后的 latest。实际设置与更新范围见[现行说明](egress-udp.md)；不要按历史 SHA 判定新版本更新失败。
+
 2026-10-03, Mr.shaw. Images published; real server, provider, mobile applications and UI screenshot acceptance remain pending. This is not a stable-release claim.
 
 | Repository | Image source revision | Successful Actions |

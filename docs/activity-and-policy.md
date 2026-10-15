@@ -1,6 +1,6 @@
 # Node 活动统计与设备策略合同
 
-本文说明当前活动统计与设备策略边界；历史发布和验收证据见[对应历史记录](releases/activity-policy.md)。维护者：Mr.shaw。
+说明在线用户采样、HWID 登记和独立账号的范围。共享兼容账号仍可使用；策略接收确认不是全部物理设备已被限制的证明。
 
 ## 数据流与认证
 
@@ -64,8 +64,8 @@ Node 启动、重启及重新连接后同步；管理员创建、修改、删除
 
 本 Fork 保留 Marzban / Marzban-Node 上游历史、许可证和作者署名。Xray 协议依据官方 [StatsService protobuf](https://github.com/XTLS/Xray-core/blob/v26.3.27/app/stats/command/command.proto)、[实现](https://github.com/XTLS/Xray-core/blob/v26.3.27/app/stats/command/command.go) 和 [OnlineMap](https://github.com/XTLS/Xray-core/blob/v26.3.27/app/stats/online_map.go)。本次 wire 编解码及策略验证为本 Fork 自行实现，没有复制其他面板的设备限制源文件。
 
-## 验证、升级与回退
+## 升级和验证
 
-两仓库运行 `python -B -m unittest discover -s tests -v`；主面板运行 `npm exec tsc -- --noEmit` 和 `npm exec vite -- build --outDir build-ci`。Node 设置 `XRAY_TEST_BINARY` 可运行固定核心真实配置预检及 TLS Stats RPC。UI 必须以原 Chakra 组件在桌面/手机渲染后审阅，再推送。
+确认主控与目标 Node 支持所需活动/策略合同，再按配对功能要求更新；不通过重装、删卷或重建证书升级。分别验证共享订阅与 HWID 独立凭据、重启后账号同步及活动来源，不用 socket 数量推算设备。历史设备迁移不代表当前应用最新迁移 head。
 
-2026-10-02 历史发布证据（不是当前 latest 状态）：配对主面板 commit `a6efaa8eafd82c3f68d2ff29074cf9eeb1ec8ae0` / Actions `36975384550`，Node commit `d6f3bec204a75085939b5b4e25fa6502f5946ae5` / Actions `36975383911`；两个 GHCR `latest` 镜像均已发布，具体历史证据见[活动策略历史](releases/activity-policy.md)。脚本无运行时变更，核心继续固定 `v26.3.27`。已有 Fork 部署使用 `marzban update` / `marzban-node update`，官方旧安装首次切换使用 adopt，新机才使用 install。保留数据库、环境文件、证书、现有端口、配置及数据卷；本轮包含设备凭据数据库迁移，必须先备份后升级。回退到先前配对镜像与保存的配置；旧面板忽略新增指标字段，旧 Node 被识别为不支持新增方法。上述日期未完成服务器验收；此历史记录不代表之后所有服务器的状态，当前变更仍须按对应功能专页验收。
+[历史测试与发布证据](releases/activity-and-policy-guide-20261015.md) · [主控更新流程](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)

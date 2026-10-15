@@ -1,10 +1,8 @@
-> 已配对发布；[当前镜像/SSH/验收证据](node-relay-release.md)。下文本地未发布文字为原开发阶段记录，服务器仍待验收。
+# Node 到 Node 中转协议
 
-# Mr.shaw Node → Node 线协议
+说明源 Node 的认证控制通道、目标快照和透明 TCP 转发。设置通过[主控连接方式弹窗](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY.md)完成，不改变目标出口或原客户端条目名称。
 
-MR-20261008-NODE-RELAY-SOURCES：代码已合并、干净Linux CI与双架构镜像已发布核对，服务器验收待完成。[配对发布证据](node-relay-release.md)；[主控管理API与升级合同](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_SOURCES.md)。
-
-源 Node 接受主控通过原认证 REST/RPyC 下发的固定目标快照，使用已有 Xray v26.3.27 独立进程转发 TCP，不经过源住宅出口。目标 Node 继续使用原认证、设备凭据和出口。无需额外转发软件，新增 psutil==5.9.4；不改原证书/控制/API端口、.env、数据目录或核心配置。必须放行源的业务监听 TCP端口。
+源 Node 接受主控通过原认证 REST/RPyC 下发的固定目标快照，使用已有 Xray v26.3.27 独立进程转发 TCP，不经过源住宅出口。目标 Node 继续使用原认证、设备凭据和出口。无需额外转发软件，监听归属检测使用镜像内的 psutil 5.9.4；不改原证书/控制/API端口、.env、数据目录或核心配置。必须放行源的业务监听 TCP端口。
 
 能力 `managed-node-relay-v1` 在 health capabilities 与状态返回。REST POST `/relays/status` 接收 session_id；POST `/relays` 接收 session_id/profiles，原 TLS 客户端证书与会话认证继续生效，错会话403。RPyC `fetch_relay_status()`、`set_relays(JSON字符串)` 均经原 SSL连接，响应JSON字符串，嵌套列表/字典为普通值而非远程对象。
 
@@ -18,10 +16,8 @@ REST还需原session_id字段；RPyC只传profiles列表的JSON字符串。每pr
 
 控制会话接管、断开、显式停止清理旧进程；源进程意外退出由主控周期检查后重下发数据库快照。服务/容器重启没有独立relay数据库，主控重连恢复。写超时可能实际已应用；主控恢复前通过状态核对，不盲目重放或广告新端点。原在线用户查询只统计源自身核心；透明转发用户在目标认证，不等于源Node新增物理设备或重复用户计费。
 
-本轮源 Node 镜像必须配对发布；已切Fork且承担来源的服务器发布后用marzban-node update，随后更新主面板。仅作目标的现有配对Node无新来源要求；原安装不能用重装/删卷更新。旧Node无能力时主控明确拒绝新的Node来源设置，主控来源/直连仍可使用。
+承担来源的 Node 需要支持 managed-node-relay-v1；已切 Fork 的来源服务器使用 marzban-node update，确认连接和能力后更新主面板。仅作目标的现有配对Node无新来源要求；原安装不能用重装/删卷更新。旧Node无能力时主控明确拒绝新的Node来源设置，主控来源/直连仍可使用。
 
-本地测试覆盖快照范围/认证错误/REST ASGI JSON/真实本地RPyC序列化/固定Xray多目标TLS透明转发/占用失败回滚和进程恢复。真实Linux mTLS配对、供应商网络、手机/桌面、吞吐及持续运行仍待验收，非稳定发布。CI第一轮未准备Xray的跳过项必须由第二轮显式固定Xray测试全部执行；不能将跳过当通过。
+[主控字段与隔离范围](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_SOURCES.md) · [链路测试](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_TESTING.md) · [历史配对发布证据](releases/node-relay-guide-20261015.md)
 
-最终Node完整60/60连续两轮、无跳过；配对主控164/164两轮，前端47/47、TypeScript/Vite、依赖/编译/diff通过。使用项目固定Python环境与真实v26.3.27测试二进制；不是已完成干净LinuxCI或跨服务器mTLS联调。当前已上传/合并，Linux CI及新镜像发布核对完成；真实服务器配对仍待验收。
-
-感谢 Marzban、Marzban-Node 与 Xray 原作者/贡献者，保留上游许可。node_relay.py复用Mr.shaw本Fork主控纯模块，无3X-UI源码复制。
+保留 Marzban、Marzban-Node 与 Xray 原作者及许可证；node_relay.py 复用本 Fork 主控模块。
