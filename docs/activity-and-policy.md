@@ -1,6 +1,6 @@
 # Node 活动统计与设备策略合同
 
-状态：2026-10-02，镜像已发布，服务器验收待完成；维护者：Mr.shaw。Node commit、Actions run 和 GHCR digest 已核对，服务器尚未部署。
+本文说明当前活动统计与设备策略边界；历史发布和验收证据见[对应历史记录](releases/activity-policy.md)。维护者：Mr.shaw。
 
 ## 数据流与认证
 
@@ -52,13 +52,13 @@ REST 会话缺失、失效或不匹配返回 403；无效策略返回 422。每�
 
 完整快照包含 active、on_hold、limited 用户，排除 disabled、expired 和已删除用户。策略快照本身不会传递密码、订阅 Token、原始 HWID、设备记录或 IP 地址；设备专属协议凭据由主面板的 Xray 配置生成器按已登记设备加载，并通过现有认证控制通道随配置同步到 Node。
 
-成功响应为 `accepted=true`、`policy_count`、`policy_revision`（规范化快照 SHA-256）、`policy_synced_at`（UTC）、`policy_enforcement=subscription_request_and_node_credentials`、`direct_connection_enforced=true`。健康接口保留以上元数据，主面板还显示 `policy_sync_status`：synced/pending/failed/unsupported。同步成功要求确认数量和执行范围匹配；错误确认标为失败。
+成功响应为 `accepted=true`、`policy_count`、`policy_revision`（规范化快照 SHA-256）、`policy_synced_at`（UTC）、`policy_enforcement=subscription_request_and_node_credentials`、`direct_connection_enforced=true`。健康接口保留以上元数据，主面板还显示 `policy_sync_status`：synced/pending/failed/unsupported。同步成功要求确认数量和执行范围匹配；错误确认标为失败。这些 ACK 是协议能力及接收确认，不是所有客户端、物理设备或直连均被强制限制的证明；共享兼容账号仍可使用。
 
 Node 启动、重启及重新连接后同步；管理员创建、修改、删除用户后同步；60 秒任务补齐计划任务修改及失败重试。批次按顺序执行，一个批次只读一次数据库、最多并行推送 10 个 Node；单节点失败不阻断其他节点或回滚已保存用户。旧 REST 返回 404/405/501、旧 RPyC 无方法时标为 unsupported，继续原连接功能。
 
-`reject_new` 当前在主面板订阅请求携带 `X-HWID` 时拒绝超出登记上限的新设备，并为每个已登记 HWID 生成 VLESS/VMess UUID 或 Trojan/Shadowsocks 密码。主面板和 Node 的 Xray 配置只加载这些已登记设备账号，因此更新后的配置会拒绝没有对应专属凭据的新连接；Node 接收策略确认本身不是拦截证据。已经导入旧共享 UUID/密码的客户端不会被订阅请求主动踢下线，在线 IP 表也不是实时物理设备数。
+`reject_new` 当前在主面板订阅请求携带 `X-HWID` 时拒绝超出登记上限的新设备，并为每个已登记 HWID 生成 VLESS/VMess UUID 或 Trojan/Shadowsocks 密码。主面板和 Node 的 Xray 配置同时保留普通订阅的共享账号及已登记设备的独立账号，重启后也需保留两者；没有有效私有凭据的连接无法使用对应私有账号，但共享兼容路径仍可绕过 HWID 限额。Node 接收策略确认本身不是拦截证据。订阅请求不主动踢除旧连接，在线 IP 表也不是实时物理设备数。
 
-设备登记表由迁移 `4a9d2e8b7c61_add_user_device_limit.py` 创建，设备凭据由最新迁移 `6d7e8f9012ab_add_device_credentials.py` 保存；这是当前设备限制迁移链的最新 revision。切回 `log_only` 会清理设备账号并恢复共享账号。Node 不保存原始 HWID，也不独立计算 HWID；主面板负责登记和生成凭据。Node 返回的策略 ACK 不是实时在线设备数证明，直接拒绝依据是收到并加载后的 Xray 设备账号配置。
+设备登记表由迁移 `4a9d2e8b7c61_add_user_device_limit.py` 创建，设备凭据由历史迁移 `6d7e8f9012ab_add_device_credentials.py` 保存；两者是设备功能的历史迁移，不代表当前主控应用的最新迁移 head。切回 `log_only` 会清理设备账号并恢复共享账号。Node 不保存原始 HWID，也不独立计算 HWID；主面板负责登记和生成凭据。Node 返回的策略 ACK 不是实时在线设备数证明，直接拒绝依据是收到并加载后的 Xray 设备账号配置。
 
 ## 来源与致谢
 
@@ -68,4 +68,4 @@ Node 启动、重启及重新连接后同步；管理员创建、修改、删除
 
 两仓库运行 `python -B -m unittest discover -s tests -v`；主面板运行 `npm exec tsc -- --noEmit` 和 `npm exec vite -- build --outDir build-ci`。Node 设置 `XRAY_TEST_BINARY` 可运行固定核心真实配置预检及 TLS Stats RPC。UI 必须以原 Chakra 组件在桌面/手机渲染后审阅，再推送。
 
-发布证据：配对主面板 commit `a6efaa8eafd82c3f68d2ff29074cf9eeb1ec8ae0` / Actions `36975384550`，Node commit `d6f3bec204a75085939b5b4e25fa6502f5946ae5` / Actions `36975383911`；两个 GHCR `latest` 镜像均已发布，具体 digest 见各自 `RELEASE_CHECKLIST.md`。脚本无运行时变更，核心继续固定 `v26.3.27`。已有 Fork 部署使用 `marzban update` / `marzban-node update`，官方旧安装首次切换使用 adopt，新机才使用 install。保留数据库、环境文件、证书、现有端口、配置及数据卷；本轮包含设备凭据数据库迁移，必须先备份后升级。回退到先前配对镜像与保存的配置；旧面板忽略新增指标字段，旧 Node 被识别为不支持新增方法。服务器尚未验收，当前不提供“稳定发布”结论。
+2026-10-02 历史发布证据（不是当前 latest 状态）：配对主面板 commit `a6efaa8eafd82c3f68d2ff29074cf9eeb1ec8ae0` / Actions `36975384550`，Node commit `d6f3bec204a75085939b5b4e25fa6502f5946ae5` / Actions `36975383911`；两个 GHCR `latest` 镜像均已发布，具体历史证据见[活动策略历史](releases/activity-policy.md)。脚本无运行时变更，核心继续固定 `v26.3.27`。已有 Fork 部署使用 `marzban update` / `marzban-node update`，官方旧安装首次切换使用 adopt，新机才使用 install。保留数据库、环境文件、证书、现有端口、配置及数据卷；本轮包含设备凭据数据库迁移，必须先备份后升级。回退到先前配对镜像与保存的配置；旧面板忽略新增指标字段，旧 Node 被识别为不支持新增方法。上述日期未完成服务器验收；此历史记录不代表之后所有服务器的状态，当前变更仍须按对应功能专页验收。

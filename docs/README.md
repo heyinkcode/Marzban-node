@@ -15,6 +15,7 @@
 - [更新记录](../CHANGELOG.md)
 - [协议和开发边界](node-development-plan.md)
 - [发布检查清单](../RELEASE_CHECKLIST.md)
+- [按功能查阅历史发布证据](releases/README.md)
 - [历史首页发布记录归档](README_RELEASE_HISTORY.md)
 - [主控接口文档](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)
 

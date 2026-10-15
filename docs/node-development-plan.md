@@ -1,57 +1,28 @@
-# Marzban-Node 开源扩展开发边界
+# Node 协议与开发边界
 
-文档分工：README及各语言README保持产品介绍、安装/使用和简洁导航；不堆叠发布编号、测试过程、SHA、Actions、镜像摘要或验收日志。功能变更更新对应docs专页，摘要写CHANGELOG，接口写接口文档，发布证据写发布页；README仅在产品介绍/使用入口变化时调整。保留上游署名与许可；旧记录迁移保留历史并修正相对链接。
+这是现行协议入口，不是发布日志。各次测试、SHA、Actions 和镜像证据见[功能发布历史](releases/README.md)及对应功能专页。
 
-[文档中心](README.md) · [历史首页记录](README_RELEASE_HISTORY.md)
+## 控制通道和业务流量
 
-## MR-20261015-EGRESS-PROBE（配对镜像已发布，服务器验收待完成）
+Node 沿用既有认证 REST 或 RPyC TLS 控制连接。主控用它下发配置、读取指标和接收确认，不使用 REST 搬运用户流量。Xray 固定 v26.3.27，保留证书、服务端口、Xray API 端口和数据目录，不新增公开监控端口。
 
-发布前验证：主控完整190/190两轮，应用专项8/8再三轮；Node完整80/80两轮，出口/真实核心恢复专项21/21再三轮（含真实子进程、TCP/UDP报文及固定Xray进程，无跳过）；前端60/60、TypeScript/Vite生产构建、pip check和固定入口diff检查通过。原组件HTML已展示，浏览器截图与两台生产服务器验收未执行。真实恢复测试额外发现旧核心进程/日志管道未回收，已修复并复跑；Windows夹具单独补SystemRoot，不修改Linux生产环境。
+## 扩展合同
 
-原出口弹窗新增目标 Node 连接检测，解析/TCP/HTTP或SOCKS5认证/HTTPS出口/DNS与UDP分阶段报告，5/10秒阶段上限、1/3轮、单Node一次、30秒总上限。四语言、原主题/宽度/账号密码/UDP模式保留。只测当前草稿，不保存或重启业务核心；停止等待不取消Node已启动的限时任务。不是客户端或中转整链验收，也不是测速/业务Xray探测。
+| REST POST / RPyC 方法 | 合同和限制 |
+| --- | --- |
+| `/health` / `fetch_health()` | [健康、活动来源与采样时间](activity-and-policy.md) |
+| `/device-activity`、`/device-policies` / `fetch_device_activity()`、`set_device_policies()` | [活动与完整策略快照](activity-and-policy.md) |
+| `/egress/probe` / `probe_egress()` | [认证、限时检测、进程回收与脱敏](egress-probe.md) |
+| `/relays/status`、`/relays` / `fetch_relay_status()`、`set_relays()` | [来源能力、完整快照、监听与精确 ACK](node-relay.md) |
 
-主控新增sudo POST /api/node/{node_id}/egress/test；既有PUT/DELETE出口接口改为Node重启/API确认后才提交，失败保留保存值，Node启动失败尝试恢复旧配置，ACK丢失明确未确认且不盲目重发。Node新增认证REST /egress/probe、RPyC probe_egress与managed-egress-probe-v1能力。修复密码首尾空格被Node裁剪的问题。两仓库需配对更新；scripts无运行时变化，Xray v26.3.27、数据库迁移/证书/端口/用户/.env/数据卷无变化。
+HTTP/SOCKS5 出口由主控生成每 Node 的配置扩展，见[出口与 UDP](egress-udp.md)。新检测/安全应用需 managed-egress-probe-v1；Node 中转来源需 managed-node-relay-v1。旧节点的兼容或拒绝行为按各合同执行，不凭版本字符串猜测能力。
 
-[合同、错误码、摘要证据与升级验收](egress-probe.md)。先更新使用出口检测的目标Node，再更新主控；scripts无运行时变化。
+Node 只加载主控最终下发的账号配置；无 HWID 共享兼容账号仍保留。不能把策略 ACK、在线用户、IP、连接或设备登记数互相替代，也不能声称全部客户端受设备限额强制约束。
 
-2026-10-15 发布证据：主控源789130c30a69a85708255154d0d4f6a24c573495，经PR #21合入258218c07c9f2e265e790764bd727e528dcb761d；Node源ce3bed0decccef70c70765f9f59936a8b6a78dc6，经PR #5合入168a9e63d7c5219dffafd5839876db30b57e3cd5。主控分支Actions38670782109、正式38671882097，Node PR38660291647/分支38660285441、正式38671875814均成功；两latest的index/双架构manifest/config摘要与OCI revision已核对。用户要求的额外一轮主控190/190、Node80/80、前端60/60、类型/生产构建/pip check也通过。仅文档[skip ci]回写不改变镜像运行时revision；服务器未更新/验收，不能据此宣称实际供应商或客户端已恢复。
+## 开发和发布
 
+只修改隔离分支，保留用户数据与上游历史。新增协议须测试认证、旧版本、错误输入、超时、并发、ACK 丢失和恢复；真实固定核心测试与模拟测试分开记录。Node 作为来源的中转进程与业务核心隔离，但同一来源更新快照可能短暂影响其其他中转会话。
 
-## 2026-10-02 发布状态
+主控、Node、scripts 分别登记是否有运行时变化，按能力要求配对发布。普通单测、Linux 构建、双架构镜像核对和真实服务器验收是不同阶段。已有 Fork 使用 update，新机才 install，不重复 adopt 或删除数据卷。
 
-镜像已发布，服务器验收待完成。`master` commit `d6f3bec204a75085939b5b4e25fa6502f5946ae5`、Actions `36975383911` 和 GHCR index `sha256:f2a9e93ca3168abb3559f3e48baa98d02e6377fb8d4a480407f447a97bbbf774` 已核对；配对主面板 commit 为 `a6efaa8eafd82c3f68d2ff29074cf9eeb1ec8ae0`。正式 Xray 固定 `v26.3.27`，不能把服务器尚未验收写成稳定发布。
-
-## 2026-10-02 配对增补（未发布）
-
-本地加入核心在线用户查询、旧核心观察流量回退，以及脱敏策略快照接收确认。采用既有 REST/RPyC TLS 控制通道；Xray 仍固定 v26.3.27，原证书、端口、数据及部署命令保持原样。详情和限制以本仓库 [活动与策略合同](activity-and-policy.md) 为准。
-
-Node 接收策略确认不是单独的直接连接拦截证据；当前配对主面板会为已登记 HWID 生成独立协议凭据，并把仅含这些设备账号的 Xray 配置通过现有 TLS 控制通道下发到 Node。已经导入旧共享凭据的客户端不会被订阅请求主动踢下线；Node 不保存原始 HWID。
-
-状态：开发分支已实现节点健康快照与每节点一条 HTTP/SOCKS 出站，完成本地单元测试和面板到 Node 的配置合同检查；真实 Xray 二进制解析测试需要设置 `XRAY_TEST_BINARY`，尚未在真实 Linux Node 联调或部署生产环境。具体能力与限制见根目录 `FORK_FEATURES.md`。
-
-## 基线与协作
-
-本仓库是 Mr.shaw 维护的 `Gozargah/Marzban-node` Fork，历史基线为 `607cb4d2c94019219ab91a8df5eeed1ff49b1ecf`。对应面板仓库为 `kissow/Marzban`，历史基线为 `7f396db3e703d71a28060bc9ce4a532ec64cb1f4`。保留原项目历史和 AGPL-3.0 许可证；`kissow/Marzban-node/master` 是正式发布分支，临时配对分支合并后删除。
-
-## 三项功能的节点侧调查
-
-1. **逐节点状态**：先核对现有节点与面板的通信、认证、心跳和状态数据，再定义最小健康快照及时间戳。优先复用现有安全通道，不默认开放新端口；旧节点须保持兼容。
-2. **设备限制**：确认节点实际能观测到哪些连接标识及其生命周期，评估共享 IP、NAT、重装客户端和漫游导致的误判。先审计、告警，再考虑可回退的阻断。
-3. **住宅 IP 出站**：核对 Xray 能力、面板下发配置与节点应用路径；代理凭据不得写入日志或仓库，灰度失败必须能回到原出站。
-
-## 联调门槛
-
-面板 API 与节点协议分别验证。记录面板 SHA、节点 SHA、协议兼容范围和回滚方式；测试节点验收后再讨论生产部署。原作者仓库仅作历史参考；如需参考外部代码，必须人工审阅后合入隔离分支，禁止自动“同步分支”或强推覆盖 Mr.shaw 的正式发布分支。第三方项目如需使用指标，应独立调用 Marzban 的受保护 API，不属于本仓库开发范围。
-
-## 接口与发布登记
-
-节点开发涉及的 REST/RPyC 方法、健康快照、能力标识、住宅出口配置合同和失败
-行为，统一登记在 [`../../09-接口登记索引.md`](../../09-接口登记索引.md)。每次
-改动还要同步填写 [`../../08-跨仓库更新登记模板.md`](../../08-跨仓库更新登记模板.md)，
-并在主面板、Node、scripts 的 CHANGELOG 和发布清单中记录配对 commit、最低兼容
-版本、Actions/GHCR 证据、Xray 版本、备份和服务器验收。仅 Node 内部重构也要
-说明主面板 API、Node 通道、证书、端口、数据库和脚本命令是否无变化。
-
-标准顺序是：先登记影响矩阵，再改代码和合同；本地测试与 `git diff --check`；
-CI 构建并记录镜像 digest；隔离服务器执行 `install`/`adopt`/`update` 对应场景；
-最后才把“开发中”改为“已发布”。
+[主控 API 索引](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md) · [跨仓库流程](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md) · [本仓库发布检查](../RELEASE_CHECKLIST.md)
