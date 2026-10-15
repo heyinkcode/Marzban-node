@@ -15,6 +15,7 @@ from config import XRAY_ASSETS_PATH, XRAY_EXECUTABLE_PATH
 from device_activity import DeviceActivityTracker
 from device_policy import DevicePolicyStore
 from health import snapshot
+from egress_probe import probe as probe_egress
 from relay_manager import RelayManager
 from logger import logger
 from xray_stats import XrayStatsClient
@@ -58,6 +59,7 @@ class Service(object):
         self.router.add_api_route("/", self.base, methods=["POST"])
         self.router.add_api_route("/ping", self.ping, methods=["POST"])
         self.router.add_api_route("/health", self.health, methods=["POST"])
+        self.router.add_api_route("/egress/probe", self.egress_probe, methods=["POST"])
         self.router.add_api_route("/device-activity", self.device_activity, methods=["POST"])
         self.router.add_api_route("/device-policies", self.set_device_policies, methods=["POST"])
         self.router.add_api_route("/relays", self.set_relays, methods=["POST"])
@@ -138,6 +140,16 @@ class Service(object):
     def health(self, session_id: UUID = Body(embed=True)):
         self.match_session_id(session_id)
         return {**snapshot(), **self.activity.snapshot(), **self.device_policies.metadata(), "node_relay": self.relays.state()}
+
+    def egress_probe(self, session_id: UUID = Body(embed=True), profile: Dict[str, Any] = Body(embed=True),
+                     timeout_seconds: int = Body(5, embed=True), attempts: int = Body(1, embed=True)):
+        self.match_session_id(session_id)
+        try:
+            return probe_egress(profile, timeout_seconds, attempts)
+        except ValueError as exc:
+            raise HTTPException(422, "Invalid egress probe parameters") from exc
+        except RuntimeError as exc:
+            raise HTTPException(409, "PROBE_BUSY") from exc
 
     def relay_status(self, session_id: UUID = Body(embed=True)):
         self.match_session_id(session_id)

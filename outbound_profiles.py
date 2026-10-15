@@ -53,7 +53,9 @@ def _profile(profile, tags):
     server_config = {"address": server, "port": port}
     if username is not None:
         server_config["user"] = _text(username, "username")
-        server_config["pass"] = _text(password, "password")
+        # Passwords are opaque; trimming them silently breaks valid accounts.
+        _text(password, "password")
+        server_config["pass"] = password
     return {"tag": tag, "protocol": protocol, "settings": server_config}
 
 
