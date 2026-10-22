@@ -47,4 +47,4 @@ Use an isolated test account to verify the provider exit IP, TCP53, selected UDP
 
 Retain Gozargah/Marzban-Node and XTLS/Xray-core licenses and credits. Reference behavior: [fixed-version DNS outbound](https://github.com/XTLS/Xray-core/blob/v26.3.27/proxy/dns/dns.go) and [DNS config parser](https://github.com/XTLS/Xray-core/blob/v26.3.27/infra/conf/dns_proxy.go).
 
-[Panel configuration guide](https://github.com/kissow/Marzban/blob/master/docs/NODE_EGRESS_UDP.md) · [Historical tests and release evidence](releases/egress-udp-guide-20261015.md)
+[Panel configuration guide](https://github.com/heyinkcode/Marzban/blob/master/docs/NODE_EGRESS_UDP.md) · [Historical tests and release evidence](releases/egress-udp-guide-20261015.md)

@@ -1,6 +1,8 @@
 # 文档中心 / Documentation
 
-产品安装请看[README](../README.md)。出口和中转通过配对的[Marzban主控](https://github.com/kissow/Marzban)配置。
+- [GitHub 用户名迁移与已有服务器更新](GITHUB_NAMESPACE_MIGRATION.md)
+
+产品安装请看[README](../README.md)。出口和中转通过配对的[Marzban主控](https://github.com/heyinkcode/Marzban)配置。
 
 ## 功能与使用
 
@@ -17,7 +19,7 @@
 - [发布检查清单](../RELEASE_CHECKLIST.md)
 - [按功能查阅历史发布证据](releases/README.md)
 - [历史首页发布记录归档](README_RELEASE_HISTORY.md)
-- [主控接口文档](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)
+- [主控接口文档](https://github.com/heyinkcode/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)
 
 SHA、Actions、镜像摘要、测试和验收明细放在对应功能/发布文档，不放进产品首页；发布不等于生产服务器验收。
 

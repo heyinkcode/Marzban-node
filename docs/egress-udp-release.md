@@ -6,9 +6,9 @@
 
 | Repository | Image source revision | Successful Actions |
 | --- | --- | --- |
-| kissow/Marzban | `10f46df8e52ad24c79a1d4a1aafc020a7f7ad335` | [37119086192](https://github.com/kissow/Marzban/actions/runs/37119086192) |
-| kissow/Marzban-node | `ff3ed8affb43a7c0be84b7404b25ba149cd9c805` | [37119086117](https://github.com/kissow/Marzban-node/actions/runs/37119086117) |
-| kissow/Marzban-scripts (documentation only) | `23c6dffe006eea30e117ffc86972f5fc94eab33d` | [37119329541](https://github.com/kissow/Marzban-scripts/actions/runs/37119329541) |
+| kissow/Marzban | `10f46df8e52ad24c79a1d4a1aafc020a7f7ad335` | [37119086192](https://github.com/heyinkcode/Marzban/actions/runs/37119086192) |
+| kissow/Marzban-node | `ff3ed8affb43a7c0be84b7404b25ba149cd9c805` | [37119086117](https://github.com/heyinkcode/Marzban-node/actions/runs/37119086117) |
+| kissow/Marzban-scripts (documentation only) | `23c6dffe006eea30e117ffc86972f5fc94eab33d` | [37119329541](https://github.com/heyinkcode/Marzban-scripts/actions/runs/37119329541) |
 
 `ghcr.io/kissow/marzban:latest` index `sha256:6d008568b64fc0ebdf6b323d0a3a7ffeb8d717aa55fd93c30724127ff6146a81`; amd64 `sha256:1206e3f858795ec1790e7506d27c8069e6e72d8a1268369453258647a83f59c9`; arm64 `sha256:18c54440017bee8aeb3fb0b53e9eb2103806009663c972b2ad8413cfaf399976`. Both OCI revisions match the panel source above.
 

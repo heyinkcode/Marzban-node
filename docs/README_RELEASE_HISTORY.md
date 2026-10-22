@@ -27,7 +27,7 @@
 
 主控revision 93bfbb5b17dd8ee731449976df1a4af4e0f57ca5，Actions37657985804；Node revision 7b45fc0dc3b4451045a06123b52ccdaaa5911b8d，Actions37657976968。scripts合并ed274ba82410f9e6f580cbec59b2a15a89ab81ea，Actions37657994843成功，脚本运行时不变。先在承担来源的Node运行marzban-node update，再在主控运行marzban update；仅作目标的既有配对Node不强制更新。新Node沿用仓库install，现在拉取新latest；旧机不重装、不删卷、不重复adopt。源业务入口TCP需放行，客户端刷新订阅。
 
-[精确配对SHA、index/架构/config摘要、接口与SSH验收证据](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_SOURCES_RELEASE.md)。下方旧记录只描述各自日期的阶段，不代替本轮最新状态；文档[skip ci]提交不改变已核对的运行时镜像revision。
+[精确配对SHA、index/架构/config摘要、接口与SSH验收证据](https://github.com/heyinkcode/Marzban/blob/master/docs/NODE_RELAY_SOURCES_RELEASE.md)。下方旧记录只描述各自日期的阶段，不代替本轮最新状态；文档[skip ci]提交不改变已核对的运行时镜像revision。
 
 
 > **Current release (2026-10-03, MR-20261003-EGRESS-UDP):** Paired panel/Node code and multiarchitecture latest images are published and OCI revisions verified. [Source SHAs, successful Actions and exact image digests](egress-udp-release.md). Server/provider/mobile/UI screenshot acceptance remains pending; this is not a stable-release claim. Update Node first, then panel. Scripts runtime, certificates, ports, volumes and pinned Xray v26.3.27 are unchanged. Legacy remains default. TCP-only DNS is not arbitrary UDP-to-TCP conversion. [Wire contract and acceptance](egress-udp.md).
@@ -40,12 +40,12 @@ Every Node code, protocol, Xray-core, configuration, UI-facing contract, or docu
 
 ## Interface and release record
 
-The canonical cross-repository interface list is [`../09-接口登记索引.md`](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md).
+The canonical cross-repository interface list is [`../09-接口登记索引.md`](https://github.com/heyinkcode/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md).
 Before changing a REST/RPyC method, health snapshot field, `marzban_node_extensions`
 field, Xray preflight rule, certificate/port behavior, or installation command, update
 that index, this README, `CHANGELOG.md`, and the paired Marzban and Marzban-scripts
 records in the same change. The required change card and evidence fields are defined in
-[`../08-跨仓库更新登记模板.md`](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md).
+[`../08-跨仓库更新登记模板.md`](https://github.com/heyinkcode/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md).
 
 For every release, record the Node commit, paired panel commit, scripts commit, image
 tag and GHCR digest, GitHub Actions run, fixed Xray version, protocol compatibility,

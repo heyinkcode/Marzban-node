@@ -1,5 +1,7 @@
 # Marzban-Node 发布检查清单
 
+- [ ] 核对新用户名的原始脚本、匿名镜像拉取与双架构 revision；旧 Fork 更新迁移/失败恢复及固定标签边界见[指南](docs/GITHUB_NAMESPACE_MIGRATION.md)。
+
 - [ ] 现行说明无失效开发状态或旧接口行为；历史全文、来源及有效链接保留，旧摘要明确为日期快照。
 
 每次发布复制此未勾选模板，结果进入对应功能发布页；[历史记录](docs/releases/README.md)不能当成本次通过证明。
@@ -15,4 +17,4 @@
 - [ ] 区分发布与服务器验收；记录验收日期、范围、剩余风险和恢复步骤。
 - [ ] 纯文档提交明确无需重新构建镜像，不把旧运行时 revision 改成文档提交 SHA。
 
-[协议边界](docs/node-development-plan.md) · [主控发布流程](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)
+[协议边界](docs/node-development-plan.md) · [主控发布流程](https://github.com/heyinkcode/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)

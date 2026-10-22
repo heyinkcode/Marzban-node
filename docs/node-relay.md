@@ -1,6 +1,6 @@
 # Node 到 Node 中转协议
 
-说明源 Node 的认证控制通道、目标快照和透明 TCP 转发。设置通过[主控连接方式弹窗](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY.md)完成，不改变目标出口或原客户端条目名称。
+说明源 Node 的认证控制通道、目标快照和透明 TCP 转发。设置通过[主控连接方式弹窗](https://github.com/heyinkcode/Marzban/blob/master/docs/NODE_RELAY.md)完成，不改变目标出口或原客户端条目名称。
 
 源 Node 接受主控通过原认证 REST/RPyC 下发的固定目标快照，使用已有 Xray v26.3.27 独立进程转发 TCP，不经过源住宅出口。目标 Node 继续使用原认证、设备凭据和出口。无需额外转发软件，监听归属检测使用镜像内的 psutil 5.9.4；不改原证书/控制/API端口、.env、数据目录或核心配置。必须放行源的业务监听 TCP端口。
 
@@ -18,6 +18,6 @@ REST还需原session_id字段；RPyC只传profiles列表的JSON字符串。每pr
 
 承担来源的 Node 需要支持 managed-node-relay-v1；已切 Fork 的来源服务器使用 marzban-node update，确认连接和能力后更新主面板。仅作目标的现有配对Node无新来源要求；原安装不能用重装/删卷更新。旧Node无能力时主控明确拒绝新的Node来源设置，主控来源/直连仍可使用。
 
-[主控字段与隔离范围](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_SOURCES.md) · [链路测试](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_TESTING.md) · [历史配对发布证据](releases/node-relay-guide-20261015.md)
+[主控字段与隔离范围](https://github.com/heyinkcode/Marzban/blob/master/docs/NODE_RELAY_SOURCES.md) · [链路测试](https://github.com/heyinkcode/Marzban/blob/master/docs/NODE_RELAY_TESTING.md) · [历史配对发布证据](releases/node-relay-guide-20261015.md)
 
 保留 Marzban、Marzban-Node 与 Xray 原作者及许可证；node_relay.py 复用本 Fork 主控模块。
