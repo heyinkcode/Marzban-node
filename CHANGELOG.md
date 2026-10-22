@@ -1,5 +1,9 @@
 # Marzban-Node 更新摘要
 
+## 2026-10-23
+
+- 同步 heyinkcode 仓库、安装/更新入口和 GHCR 构建命名空间；旧 Fork 更新迁移见[指南](docs/GITHUB_NAMESPACE_MIGRATION.md)。业务协议、数据和固定核心不变。
+
 每项更新的合同、测试与发布证据放到对应功能文档；旧全文见[功能历史](docs/releases/README.md)。
 
 ## 2026-10-16

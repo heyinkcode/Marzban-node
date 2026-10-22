@@ -1,5 +1,7 @@
 # Marzban-Node 开源扩展功能
 
+- [GitHub 用户名迁移与已有服务器更新](docs/GITHUB_NAMESPACE_MIGRATION.md)
+
 基于上游 Marzban-Node，保留历史、作者署名和许可证。安装见 [README](README.md)，设置由配对 Marzban 主控管理。
 
 | 能力 | 范围 | 文档 |

@@ -6,7 +6,7 @@
 
 ## 历史片段 1
 
-原位置：[CHANGELOG.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
+原位置：[CHANGELOG.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
 
 ---
 

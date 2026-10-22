@@ -2,7 +2,7 @@
 
 原文截至 2026-10-15，整理于 2026-10-16。下方保留开发阶段、测试及发布证据，不是当前使用指引；其中 latest、未发布、预期 revision 等仅指当时状态。
 
-[当前说明](../node-relay.md) · [历史索引](README.md) · [不可变原文](https://github.com/kissow/Marzban-node/blob/d28f3040b453beb229c7310657e97a9a52c1f84c/docs/node-relay.md)
+[当前说明](../node-relay.md) · [历史索引](README.md) · [不可变原文](https://github.com/heyinkcode/Marzban-node/blob/d28f3040b453beb229c7310657e97a9a52c1f84c/docs/node-relay.md)
 
 ---
 
@@ -10,7 +10,7 @@
 
 # Mr.shaw Node → Node 线协议
 
-MR-20261008-NODE-RELAY-SOURCES：代码已合并、干净Linux CI与双架构镜像已发布核对，服务器验收待完成。[配对发布证据](../node-relay-release.md)；[主控管理API与升级合同](https://github.com/kissow/Marzban/blob/master/docs/NODE_RELAY_SOURCES.md)。
+MR-20261008-NODE-RELAY-SOURCES：代码已合并、干净Linux CI与双架构镜像已发布核对，服务器验收待完成。[配对发布证据](../node-relay-release.md)；[主控管理API与升级合同](https://github.com/heyinkcode/Marzban/blob/master/docs/NODE_RELAY_SOURCES.md)。
 
 源 Node 接受主控通过原认证 REST/RPyC 下发的固定目标快照，使用已有 Xray v26.3.27 独立进程转发 TCP，不经过源住宅出口。目标 Node 继续使用原认证、设备凭据和出口。无需额外转发软件，新增 psutil==5.9.4；不改原证书/控制/API端口、.env、数据目录或核心配置。必须放行源的业务监听 TCP端口。
 

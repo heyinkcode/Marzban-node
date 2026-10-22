@@ -1,5 +1,7 @@
 # Node 协议与开发边界
 
+分发所有者迁为 heyinkcode，API/认证/端口合同无变化；[升级边界](GITHUB_NAMESPACE_MIGRATION.md)。
+
 这是现行协议入口，不是发布日志。各次测试、SHA、Actions 和镜像证据见[功能发布历史](releases/README.md)及对应功能专页。
 
 ## 控制通道和业务流量
@@ -25,6 +27,6 @@ Node 只加载主控最终下发的账号配置；无 HWID 共享兼容账号仍
 
 主控、Node、scripts 分别登记是否有运行时变化，按能力要求配对发布。普通单测、Linux 构建、双架构镜像核对和真实服务器验收是不同阶段。已有 Fork 使用 update，新机才 install，不重复 adopt 或删除数据卷。
 
-[主控 API 索引](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md) · [跨仓库流程](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md) · [本仓库发布检查](../RELEASE_CHECKLIST.md)
+[主控 API 索引](https://github.com/heyinkcode/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md) · [跨仓库流程](https://github.com/heyinkcode/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md) · [本仓库发布检查](../RELEASE_CHECKLIST.md)
 
 模式字段解析兼容与当前主控安全应用能力是两项检查；旧 Node 可继续已有业务，不表示支持新的检测/保存/删除流程。见[出口检测合同](egress-probe.md)。文档整理不改变 REST/RPyC、认证或运行时。

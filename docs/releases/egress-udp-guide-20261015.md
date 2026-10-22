@@ -2,7 +2,7 @@
 
 原文截至 2026-10-15，整理于 2026-10-16。下方保留开发阶段、测试及发布证据，不是当前使用指引；其中 latest、未发布、预期 revision 等仅指当时状态。
 
-[当前说明](../egress-udp.md) · [历史索引](README.md) · [不可变原文](https://github.com/kissow/Marzban-node/blob/d28f3040b453beb229c7310657e97a9a52c1f84c/docs/egress-udp.md)
+[当前说明](../egress-udp.md) · [历史索引](README.md) · [不可变原文](https://github.com/heyinkcode/Marzban-node/blob/d28f3040b453beb229c7310657e97a9a52c1f84c/docs/egress-udp.md)
 
 ---
 

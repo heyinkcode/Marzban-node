@@ -6,7 +6,7 @@
 
 ## 历史片段 1
 
-原位置：[FORK_FEATURES.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
+原位置：[FORK_FEATURES.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
 
 ---
 
@@ -14,7 +14,7 @@
 
 ## 历史片段 2
 
-原位置：[FORK_FEATURES.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
+原位置：[FORK_FEATURES.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
 
 ---
 
@@ -30,7 +30,7 @@
 
 ## 历史片段 3
 
-原位置：[FORK_FEATURES.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
+原位置：[FORK_FEATURES.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
 
 ---
 
@@ -40,22 +40,22 @@
 
 ## 历史片段 4
 
-原位置：[FORK_FEATURES.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
+原位置：[FORK_FEATURES.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/FORK_FEATURES.md)。
 
 ---
 
 ## 跨仓库登记
 
 当前可依赖的 REST/RPyC 通道、健康快照和 `marzban_node_extensions` 配置合同，
-以 [`../09-接口登记索引.md`](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md) 为唯一索引；不要仅凭本文件
+以 [`../09-接口登记索引.md`](https://github.com/heyinkcode/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md) 为唯一索引；不要仅凭本文件
 新增接口。变更时同时更新主面板的接口说明、scripts 的命令合同、CHANGELOG、
-测试证据和 [`../08-跨仓库更新登记模板.md`](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)。
+测试证据和 [`../08-跨仓库更新登记模板.md`](https://github.com/heyinkcode/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)。
 安装命令、证书、服务端口、数据目录或镜像来源发生变化时，必须增加升级、回退和
 服务器验收记录；若没有变化，也要明确写出“无变化”。
 
 ## 历史片段 5
 
-原位置：[CHANGELOG.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
+原位置：[CHANGELOG.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
 
 ---
 
@@ -63,7 +63,7 @@
 
 ## 历史片段 6
 
-原位置：[CHANGELOG.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
+原位置：[CHANGELOG.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
 
 ---
 
@@ -73,7 +73,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 7
 
-原位置：[CHANGELOG.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
+原位置：[CHANGELOG.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
 
 ---
 
@@ -89,7 +89,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 8
 
-原位置：[CHANGELOG.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
+原位置：[CHANGELOG.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/CHANGELOG.md)。
 
 ---
 
@@ -97,7 +97,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 - 所有 REST/RPyC 方法、健康快照字段、`managed-outbounds-v1` 能力、
   `marzban_node_extensions` 配置字段和 Xray 预检行为，必须同步登记到
-  [`../09-接口登记索引.md`](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)。
+  [`../09-接口登记索引.md`](https://github.com/heyinkcode/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)。
 - 同一提交必须更新本文件、[`FORK_FEATURES.md`](../../FORK_FEATURES.md)、
   [`RELEASE_CHECKLIST.md`](../../RELEASE_CHECKLIST.md)、Node 开发计划和配对的
   Marzban/Marzban-scripts 文档；仅 UI 或文档变更也要写明运行时接口无变化。
@@ -106,7 +106,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 9
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -114,7 +114,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 10
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -127,7 +127,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 11
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -140,7 +140,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 12
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -154,7 +154,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 13
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -167,7 +167,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 14
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -180,7 +180,7 @@ README仅保留产品介绍、安装及文档导航；历史发布与检测记�
 
 ## 历史片段 15
 
-原位置：[RELEASE_CHECKLIST.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
+原位置：[RELEASE_CHECKLIST.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/RELEASE_CHECKLIST.md)。
 
 ---
 
@@ -201,7 +201,7 @@ Xray 版本：
 
 ## 历史片段 16
 
-原位置：[docs/node-development-plan.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
+原位置：[docs/node-development-plan.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
 
 ---
 
@@ -213,7 +213,7 @@ Xray 版本：
 
 ## 历史片段 17
 
-原位置：[docs/node-development-plan.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
+原位置：[docs/node-development-plan.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
 
 ---
 
@@ -223,7 +223,7 @@ Xray 版本：
 
 ## 历史片段 18
 
-原位置：[docs/node-development-plan.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
+原位置：[docs/node-development-plan.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
 
 ---
 
@@ -235,7 +235,7 @@ Xray 版本：
 
 ## 历史片段 19
 
-原位置：[docs/node-development-plan.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
+原位置：[docs/node-development-plan.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
 
 ---
 
@@ -245,15 +245,15 @@ Xray 版本：
 
 ## 历史片段 20
 
-原位置：[docs/node-development-plan.md](https://github.com/kissow/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
+原位置：[docs/node-development-plan.md](https://github.com/heyinkcode/Marzban-node/blob/7d103e66972e1eeecc3002edc83ba926460ee6c4/docs/node-development-plan.md)。
 
 ---
 
 ## 接口与发布登记
 
 节点开发涉及的 REST/RPyC 方法、健康快照、能力标识、住宅出口配置合同和失败
-行为，统一登记在 [`../../09-接口登记索引.md`](https://github.com/kissow/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)。每次
-改动还要同步填写 [`../../08-跨仓库更新登记模板.md`](https://github.com/kissow/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)，
+行为，统一登记在 [`../../09-接口登记索引.md`](https://github.com/heyinkcode/Marzban/blob/master/MR_SHAW_API_AND_RELEASE.md)。每次
+改动还要同步填写 [`../../08-跨仓库更新登记模板.md`](https://github.com/heyinkcode/Marzban/blob/master/docs/REPOSITORY_UPDATE_FLOW.md)，
 并在主面板、Node、scripts 的 CHANGELOG 和发布清单中记录配对 commit、最低兼容
 版本、Actions/GHCR 证据、Xray 版本、备份和服务器验收。仅 Node 内部重构也要
 说明主面板 API、Node 通道、证书、端口、数据库和脚本命令是否无变化。
